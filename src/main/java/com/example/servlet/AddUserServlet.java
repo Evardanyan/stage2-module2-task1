@@ -14,26 +14,32 @@ import java.io.IOException;
 
 @WebServlet("/add")
 public class AddUserServlet extends HttpServlet {
-    //write your code here!
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher view = req.getRequestDispatcher("jsp/add.jsp");
-        view.forward(req, resp);
-
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("jsp/add.jsp");
+        try {
+            requestDispatcher.forward(req, resp);
+        } catch (ServletException | IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String firstName = req.getParameter("firstName");
         String lastName = req.getParameter("lastName");
-
         User user = new User(firstName, lastName);
-        Warehouse.getInstance().addUser(user);
+        Warehouse warehouse = Warehouse.getInstance();
+        warehouse.addUser(user);
 
-        req.setAttribute("user", user);
-        resp.sendRedirect("/add");
+        req.setAttribute("userName", firstName);
+        req.setAttribute("lastName", lastName);
+
+        try {
+            resp.sendRedirect("/add");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-
 
 }
