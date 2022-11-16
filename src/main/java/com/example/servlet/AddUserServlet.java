@@ -25,17 +25,10 @@ public class AddUserServlet extends HttpServlet{
         Warehouse.getInstance().addUser(user);
 
         req.setAttribute("user", user);
-        try {
-            resp.sendRedirect("/add");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        resp.sendRedirect("/add");
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/jsp/add.jsp");
-        try {
-            requestDispatcher.forward(req, resp);
-        } catch (ServletException | IOException e) {
-            e.printStackTrace();
-        }
+        requestDispatcher.forward(req, resp);
+
     }
 
 
