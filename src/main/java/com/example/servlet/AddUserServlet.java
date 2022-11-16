@@ -13,8 +13,15 @@ import java.io.IOException;
 
 
 @WebServlet("/add")
-public class AddUserServlet extends HttpServlet{
+public class AddUserServlet extends HttpServlet {
     //write your code here!
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        RequestDispatcher view = req.getRequestDispatcher("jsp/add.jsp");
+        view.forward(req, resp);
+
+    }
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
@@ -26,9 +33,6 @@ public class AddUserServlet extends HttpServlet{
 
         req.setAttribute("user", user);
         resp.sendRedirect("/add");
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/jsp/add.jsp");
-        requestDispatcher.forward(req, resp);
-
     }
 
 
